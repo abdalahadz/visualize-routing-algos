@@ -26,7 +26,8 @@ export async function drawGraph(nodes, links) {
     .selectAll("line")
     .data(links)
     .enter().append("line")
-    .attr("stroke-width", d => d.cost)
+    .attr("stroke-width", 2)
+    .attr("class", "glink")
 
     // add nodes to svg
     const node = svg.append("g")
@@ -37,7 +38,9 @@ export async function drawGraph(nodes, links) {
     .attr("r", 25);
 
     // add labels for the nodes
-    const label = svg.selectAll(".label")
+    const label = svg.append("g")
+    .attr("class", "nodelabels")
+    .selectAll(".label")
     .data(nodes)
     .enter().append("text")
     .attr("class", "label")
@@ -45,6 +48,16 @@ export async function drawGraph(nodes, links) {
     .attr("dy", ".35em")
     .style("stroke","white")
     .text(d => d.id);
+
+    //add text to link edges
+    const linkLabel = svg.append("g")
+    .attr("class", "linklabels")
+    .selectAll("text")
+    .data(links)
+    .enter()
+    .append("text")
+    .attr("class", "linklabel")
+    .text(d => d.cost);
 
     // tick function
     function ticked() {
@@ -59,6 +72,9 @@ export async function drawGraph(nodes, links) {
         label
         .attr("x", d => d.x)
         .attr("y", d => d.y);
+        linkLabel
+        .attr("x", d => (d.source.x + d.target.x) / 2)
+        .attr("y", d => (d.source.y + d.target.y) / 2);
     }
     
     // update simulation every tick
