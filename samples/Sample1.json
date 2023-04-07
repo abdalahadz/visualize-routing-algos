@@ -1,0 +1,26 @@
+{
+	"nodes": [
+		{"id": "A"},
+		{"id": "B"},
+		{"id": "C"},
+		{"id": "D"},
+		{"id": "E"},
+		{"id": "F"},
+		{"id": "G"}
+	],
+	"links": [
+		{"source": "A", "target": "B", "cost": 1},
+		{"source": "A", "target": "C", "cost": 4},
+		{"source": "B", "target": "D", "cost": 3},
+		{"source": "B", "target": "F", "cost": 2},
+		{"source": "C", "target": "E", "cost": 1},
+		{"source": "D", "target": "E", "cost": 5},
+		{"source": "D", "target": "F", "cost": 2},
+		{"source": "D", "target": "G", "cost": 5},
+		{"source": "E", "target": "G", "cost": 4},
+		{"source": "F", "target": "G", "cost": 1},
+		{"source": "G", "target": "A", "cost": 3},
+		{"source": "G", "target": "B", "cost": 5},
+		{"source": "G", "target": "C", "cost": 4}
+	]
+}
