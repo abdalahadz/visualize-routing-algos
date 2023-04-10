@@ -2,12 +2,12 @@ export * from "https://d3js.org/d3.v5.min.js";
 
 const container = d3.select(".network-disp");
 
-export async function getLink(source, destination) {
+export async function getLink(nodeA, nodeB) {
 
-    const linkTag1 = 'link' + source + destination;
-    const linkTag2 = 'link' + destination + source;
+    const linkTagAB = 'link' + nodeA + nodeB;
+    const linkTagBA = 'link' + nodeB + nodeA;
 
-    const link = d3.selectAll("."+linkTag1, "."+linkTag2)
+    const link = d3.selectAll("."+linkTagAB, "."+linkTagBA)
     return link
 }
 
