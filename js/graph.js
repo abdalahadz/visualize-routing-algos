@@ -11,10 +11,20 @@ export async function getLink(nodeA, nodeB) {
     return link
 }
 
-export async function highlightLink(link, color) {
+export async function highlightLink(nodeA, nodeB, color) {
+    const link = await getLink(nodeA,nodeB);
     link
         .style("stroke", color)
         .style("stroke-width", 5)
+        .style("opacity", 1);
+    ;
+}
+
+export async function removeHighlightLink(nodeA, nodeB) {
+    const link = await getLink(nodeA,nodeB);
+    link
+        .style("stroke", 'black')
+        .style("stroke-width", 2)
         .style("opacity", 1);
     ;
 }
