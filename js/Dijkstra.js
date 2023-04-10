@@ -1,5 +1,16 @@
 import * as graphM from './graph.js';
 
+window.runDijkstra = function runDijkstra() {
+  const nodes = graphM.getAllNodesAsList();
+  const links = graphM.getAllLinksAsList();
+
+  const graph = convert(links);
+  const start = graph[Object.keys(graph)[0]]
+  const end = graph[Object.keys(graph)[Object.keys(graph).length - 1]]
+
+  dijkstra(graph, start, end);
+}
+
 // const links = [
 //   {source: "a", target: "b", cost: 2},
 //   {source: "a", target: "c", cost: 4},
@@ -9,7 +20,7 @@ import * as graphM from './graph.js';
 //   {source: "c", target: "e", cost: 5},
 //   {source: "d", target: "e", cost: 1}
 // ];
-const links = graphM.getAllLinks();
+
 const convertText = (text) => {
   // const links = [];
   text.split("\n").forEach(line => {
@@ -46,7 +57,7 @@ const convert = (links) => {
   });
   return graph;
 }
-const graph = convert(links);
+
 // const graph = {
 //     a: { b: 5, c: 2 },
 //     b: { a: 5, c: 7, d: 8 },
@@ -56,82 +67,79 @@ const graph = convert(links);
 //     f: { e: 3, d: 4 },
 //   };
   
-  const dijkstra = (graph, start, end) => {
-    const temp = {};
-    Object.keys(graph).forEach((key) => {
-      const obj = graph[key];
-      const arr = [];
-      Object.keys(obj).forEach((vert) => arr.push({ vertex: vert, cost: obj[vert] }));
-      temp[key] = arr;
-    });
+const dijkstra = (graph, start, end) => {
+  const temp = {};
+  Object.keys(graph).forEach((key) => {
+    const obj = graph[key];
+    const arr = [];
+    Object.keys(obj).forEach((vert) => arr.push({ vertex: vert, cost: obj[vert] }));
+    temp[key] = arr;
+  });
 
-    var map = temp
-    var visited = [];
-    var unvisited = [start];
-    var shrtDist = { [start]: { vertex: start, cost: 0 } };
-    var vertex;
-    //runs through all unvisited nodes
-    while ((vertex = unvisited.shift())) {
-      // check unvisited neighbors
-      var neighbors = map[vertex].filter((n) => !visited.includes(n.vertex));
-  
-      // Add neighbors to appropriate list
-      unvisited.push(...neighbors.map((n) => n.vertex));
-  
-      var costToVertex = shrtDist[vertex].cost;
-  
-      //checks for better paths through selected neighbors
-      for (let { vertex: to, cost } of neighbors) {
-        var currCostToNeighbor =
-          shrtDist[to] && shrtDist[to].cost;
-        var newCostToNeighbor = costToVertex + cost;
-        if (
-          currCostToNeighbor == undefined ||
-          newCostToNeighbor < currCostToNeighbor
-        ) {
-          // Update the table
-          shrtDist[to] = { vertex, cost: newCostToNeighbor };
-        }
+  var map = temp
+  var visited = [];
+  var unvisited = [start];
+  var shrtDist = { [start]: { vertex: start, cost: 0 } };
+  var vertex;
+  //runs through all unvisited nodes
+  while ((vertex = unvisited.shift())) {
+    // check unvisited neighbors
+    var neighbors = map[vertex].filter((n) => !visited.includes(n.vertex));
+
+    // Add neighbors to appropriate list
+    unvisited.push(...neighbors.map((n) => n.vertex));
+
+    var costToVertex = shrtDist[vertex].cost;
+
+    //checks for better paths through selected neighbors
+    for (let { vertex: to, cost } of neighbors) {
+      var currCostToNeighbor =
+        shrtDist[to] && shrtDist[to].cost;
+      var newCostToNeighbor = costToVertex + cost;
+      if (
+        currCostToNeighbor == undefined ||
+        newCostToNeighbor < currCostToNeighbor
+      ) {
+        // Update the table
+        shrtDist[to] = { vertex, cost: newCostToNeighbor };
       }
-
-      // var keys
-      // while((keys = Object.keys(shrtDist))){
-      //   console.log(keys);
-      // }
-      const toPrint = Object.keys(shrtDist)
-      .map((vertex) => {
-        var { vertex: from, cost } = shrtDist[vertex];
-        return `${vertex}-> ${cost} through ${from}`;
-      })
-      .join("\n");
-
-      console.log(convertText(toPrint));
-      // formatted output
-      console.log("Table of costs:");
-      console.log(toPrint);
-      visited.push(vertex);
     }
 
-      // console.log(convertText(toPrint)[0]);
-    var path = [];
-    var next = end;
-    //changes text to reflect shortest path
-    while (true) {
-      path.unshift(next);
-      if (next === start) {
-        break;
-      }
-      next = shrtDist[next].vertex;
+    // var keys
+    // while((keys = Object.keys(shrtDist))){
+    //   console.log(keys);
+    // }
+    const toPrint = Object.keys(shrtDist)
+    .map((vertex) => {
+      var { vertex: from, cost } = shrtDist[vertex];
+      return `${vertex}-> ${cost} through ${from}`;
+    })
+    .join("\n");
+
+    console.log(convertText(toPrint));
+    // formatted output
+    console.log("Table of costs:");
+    console.log(toPrint);
+    visited.push(vertex);
+  }
+
+    // console.log(convertText(toPrint)[0]);
+  var path = [];
+  var next = end;
+  //changes text to reflect shortest path
+  while (true) {
+    path.unshift(next);
+    if (next === start) {
+      break;
     }
-  
-    console.log(
-      "Shortest path",
-      path.join(" -> "),
-      "using a cost of",
-      shrtDist[end].cost
-    );
-    // return convertText(toPrint);
-  };
-  
-  // convert(links);
-  dijkstra(graph, "a", "e");
+    next = shrtDist[next].vertex;
+  }
+
+  console.log(
+    "Shortest path",
+    path.join(" -> "),
+    "using a cost of",
+    shrtDist[end].cost
+  );
+  // return convertText(toPrint);
+};
