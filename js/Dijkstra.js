@@ -1,14 +1,15 @@
 import * as graphM from './graph.js';
 
-const links = [
-  {source: "a", target: "b", cost: 2},
-  {source: "a", target: "c", cost: 4},
-  {source: "b", target: "c", cost: 1},
-  {source: "b", target: "d", cost: 7},
-  {source: "c", target: "d", cost: 3},
-  {source: "c", target: "e", cost: 5},
-  {source: "d", target: "e", cost: 1}
-];
+// const links = [
+//   {source: "a", target: "b", cost: 2},
+//   {source: "a", target: "c", cost: 4},
+//   {source: "b", target: "c", cost: 1},
+//   {source: "b", target: "d", cost: 7},
+//   {source: "c", target: "d", cost: 3},
+//   {source: "c", target: "e", cost: 5},
+//   {source: "d", target: "e", cost: 1}
+// ];
+const links = graphM.getAllLinks();
 const convertText = (text) => {
   // const links = [];
   text.split("\n").forEach(line => {
@@ -20,7 +21,8 @@ const convertText = (text) => {
     else
       graphM.highlightLink(source,target,'red');
 
-    // graphM.
+    graphM.sleep(2000)
+    graph.expireLinkHighlight(source,target);
       // graph.
     // links.push({source: source, target: target, cost: cost});
   });
