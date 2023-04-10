@@ -1,4 +1,4 @@
-// import * as graph from './graph.js';
+import * as graphM from './graph.js';
 
 const links = [
   {source: "a", target: "b", cost: 2},
@@ -10,14 +10,22 @@ const links = [
   {source: "d", target: "e", cost: 1}
 ];
 const convertText = (text) => {
-  const links = [];
+  // const links = [];
   text.split("\n").forEach(line => {
     const [source, costStr, target] = line.split(/->|\sthrough\s/);
-    const cost = parseInt(costStr);
-    links.push({source: source, target: target, cost: cost});
+    // const cost = parseInt(costStr);
+    console.log(source, target)
+    if(source === target)
+      return;
+    else
+      graphM.highlightLink(source,target,'red');
+
+    // graphM.
+      // graph.
+    // links.push({source: source, target: target, cost: cost});
   });
-  links.shift();
-  return links;
+  // links.shift();
+  // return links;
 } 
 //covnerts file type for graphing to 
 const convert = (links) => {
@@ -84,21 +92,25 @@ const graph = convert(links);
         }
       }
 
-      
-      visited.push(vertex);
-    }
-
-    const toPrint = Object.keys(shrtDist)
+      // var keys
+      // while((keys = Object.keys(shrtDist))){
+      //   console.log(keys);
+      // }
+      const toPrint = Object.keys(shrtDist)
       .map((vertex) => {
         var { vertex: from, cost } = shrtDist[vertex];
         return `${vertex}-> ${cost} through ${from}`;
       })
       .join("\n");
 
+      console.log(convertText(toPrint));
       // formatted output
       console.log("Table of costs:");
       console.log(toPrint);
-      console.log(convertText(toPrint)[0]);
+      visited.push(vertex);
+    }
+
+      // console.log(convertText(toPrint)[0]);
     var path = [];
     var next = end;
     //changes text to reflect shortest path
@@ -116,6 +128,7 @@ const graph = convert(links);
       "using a cost of",
       shrtDist[end].cost
     );
+    // return convertText(toPrint);
   };
   
   // convert(links);
