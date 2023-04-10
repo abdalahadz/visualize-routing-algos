@@ -4,8 +4,8 @@ const container = d3.select(".network-disp");
 
 export async function getLink(source, destination) {
 
-    const linkTag1 = source + destination;
-    const linkTag2 = destination + source;
+    const linkTag1 = 'link' + source + destination;
+    const linkTag2 = 'link' + destination + source;
 
     const link = d3.selectAll("."+linkTag1, "."+linkTag2)
     return link
@@ -44,9 +44,7 @@ export async function drawGraph(nodes, links) {
     .data(links)
     .enter().append("line")
     .attr("stroke-width", 2)
-    .attr("class", function (d) {
-        return d.source.id + d.target.id
-    })
+    .attr("class", d =>'link'+d.source.id + d.target.id);
 
     // add nodes to svg
     const node = svg.append("g")
@@ -54,7 +52,8 @@ export async function drawGraph(nodes, links) {
     .selectAll("circle")
     .data(nodes)
     .enter().append("circle")
-    .attr("r", 25);
+    .attr("r", 25)
+    .attr("class", d => "node" + d.id);
 
     // add labels for the nodes
     const label = svg.append("g")
@@ -62,7 +61,7 @@ export async function drawGraph(nodes, links) {
     .selectAll(".label")
     .data(nodes)
     .enter().append("text")
-    .attr("class", "label")
+    .attr("class", d => "nodeLabel" + d.id)
     .attr("text-anchor", "middle")
     .attr("dy", ".35em")
     .style("stroke","white")
@@ -75,7 +74,7 @@ export async function drawGraph(nodes, links) {
     .data(links)
     .enter()
     .append("text")
-    .attr("class", "linklabel")
+    .attr("class", d =>'linkLabel'+d.source.id + d.target.id)
     .text(d => d.cost);
 
     // tick function
