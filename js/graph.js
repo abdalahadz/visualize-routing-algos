@@ -44,6 +44,10 @@ export async function resetLinkHighlights() {
     ;
 }
 
+export function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export async function drawGraph(nodes, links) {
     // clear existing sim
     container.selectAll("*").remove();

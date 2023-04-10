@@ -16,5 +16,7 @@ graph.drawGraph(nodes, links);
 
 graph.resetLinkHighlights();
 graph.highlightLink('A','B','red');
+graph.sleep(5000);
 graph.expireLinkHighlight('A','B');
+graph.sleep(5000);
 graph.highlightLink('B','C','green');
