@@ -31,9 +31,25 @@ localupdate.addEventListener("click", function(){
             {"source": links3.value, "target": linkt3.value, "cost": linkc3.valueOf}
         ]
     }
-    console.log(data)
-    graph.drawGraph(data.nodes, data.links)
+    processlocalJSON(data.nodes, data.links);
 })
 
 
+//JSON processor
+async function processlocalJSON(data) {
+    console.log(data)
+    graph.drawGraph(data.nodes, data.links)
+}
 
+//Display Controls
+importControls2()
+
+async function importControls2() {
+  const importContainer = document.getElementById("localupdate");
+  const importButton = document.createElement("input");
+  importButton.setAttribute("type","button");
+  importButton.setAttribute("value","Import");
+  importButton.setAttribute("onclick","upload()");
+  importContainer.append(importButton);
+
+}
