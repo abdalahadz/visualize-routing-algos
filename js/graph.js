@@ -11,18 +11,33 @@ export async function getLink(nodeA, nodeB) {
     return link
 }
 
+export async function getAllLink() {
+
+    const links = d3.selectAll("line")
+    return links
+}
+
 export async function highlightLink(nodeA, nodeB, color) {
     const link = await getLink(nodeA,nodeB);
     link
         .style("stroke", color)
-        .style("stroke-width", 5)
+        .style("stroke-width", 7)
         .style("opacity", 1);
     ;
 }
 
-export async function removeHighlightLink(nodeA, nodeB) {
+export async function expireLinkHighlight(nodeA, nodeB) {
     const link = await getLink(nodeA,nodeB);
     link
+        .style("stroke", 'black')
+        .style("stroke-width", 7)
+        .style("opacity", 1);
+    ;
+}
+
+export async function resetLinkHighlights() {
+    const links = await getAllLinks();
+    links
         .style("stroke", 'black')
         .style("stroke-width", 2)
         .style("opacity", 1);
