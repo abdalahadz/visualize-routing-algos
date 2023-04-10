@@ -2,6 +2,23 @@ export * from "https://d3js.org/d3.v5.min.js";
 
 const container = d3.select(".network-disp");
 
+export async function getLink(source, destination) {
+
+    const linkTag1 = source + destination;
+    const linkTag2 = destination + source;
+
+    const link = d3.selectAll("."+linkTag1, "."+linkTag2)
+    return link
+}
+
+export async function highlightLink(links, color) {
+    links
+        .style("stroke", 'green')
+        .style("stroke-width", 5)
+        .style("opacity", 1);
+    ;
+}
+
 export async function drawGraph(nodes, links) {
     // clear existing sim
     container.selectAll("*").remove();
@@ -27,7 +44,9 @@ export async function drawGraph(nodes, links) {
     .data(links)
     .enter().append("line")
     .attr("stroke-width", 2)
-    .attr("class", "glink")
+    .attr("class", function (d) {
+        return d.source.id + d.target.id
+    })
 
     // add nodes to svg
     const node = svg.append("g")
