@@ -15,4 +15,4 @@ const links = [
 graph.drawGraph(nodes, links);
 
 const link = await graph.getLink('A','B');
-graph.highlightLink(link);
+graph.highlightLink(link,'green');

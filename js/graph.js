@@ -11,9 +11,9 @@ export async function getLink(source, destination) {
     return link
 }
 
-export async function highlightLink(links, color) {
-    links
-        .style("stroke", 'green')
+export async function highlightLink(link, color) {
+    link
+        .style("stroke", color)
         .style("stroke-width", 5)
         .style("opacity", 1);
     ;
