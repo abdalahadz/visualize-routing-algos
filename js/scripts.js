@@ -14,7 +14,8 @@ const links = [
 
 graph.drawGraph(nodes, links);
 
-await graph.getAllNodesAsList()
+console.log(await graph.getAllNodesAsList());
+console.log(await graph.getAllLinksAsList());
 
 graph.resetLinkHighlights();
 graph.highlightLink('A','B','green');

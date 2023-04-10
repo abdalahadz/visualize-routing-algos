@@ -22,6 +22,17 @@ export async function getAllLinks() {
     return links
 }
 
+export async function getAllLinksAsList() {
+
+    const links = await getAllLinks()
+    return links.data().map(item => {
+        return {
+            source: item.source.id,
+            destination: item.target.id,
+            cost: item.cost
+        }});
+}
+
 //NODE RETRIEVAL
 export async function getNode(node) {
 
@@ -38,10 +49,8 @@ export async function getAllNodes() {
 
 export async function getAllNodesAsList() {
 
-    const nodes = d3.select(".nodes").selectAll("circle");
-
-    console.log(nodes.nodes());
-    return nodes
+    const nodes = await getAllNodes()
+    return nodes.data().map(({ id }) => ({ id }));
 }
 
 //HIGHLIGHT FUNCTIONS
