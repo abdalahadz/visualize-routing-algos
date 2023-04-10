@@ -28,7 +28,7 @@ export async function getAllLinksAsList() {
     return links.data().map(item => {
         return {
             source: item.source.id,
-            destination: item.target.id,
+            target: item.target.id,
             cost: item.cost
         }});
 }

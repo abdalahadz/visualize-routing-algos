@@ -1,12 +1,14 @@
 import * as graphM from './graph.js';
 
-window.runDijkstra = function runDijkstra() {
-  const nodes = graphM.getAllNodesAsList();
-  const links = graphM.getAllLinksAsList();
+window.runDijkstra = async function runDijkstra() {
+  const links = await graphM.getAllLinksAsList();
 
   const graph = convert(links);
-  const start = graph[Object.keys(graph)[0]]
-  const end = graph[Object.keys(graph)[Object.keys(graph).length - 1]]
+  const start = Object.keys(graph)[0];
+  const end = Object.keys(graph)[Object.keys(graph).length - 1]
+
+  console.log(links);
+  console.log(graph);
 
   dijkstra(graph, start, end);
 }
@@ -33,7 +35,7 @@ const convertText = (text) => {
       graphM.highlightLink(source,target,'red');
 
     graphM.sleep(2000)
-    graph.expireLinkHighlight(source,target);
+    graphM.expireLinkHighlight(source,target);
       // graph.
     // links.push({source: source, target: target, cost: cost});
   });
@@ -43,18 +45,13 @@ const convertText = (text) => {
 //covnerts file type for graphing to 
 const convert = (links) => {
   const graph = {};
-  links.forEach(link => {
-    if (!graph[link.source]) {
-      graph[link.source] = {};
-    }
-    if (!graph[link.target]) {
-      graph[link.target] = {};
-    }
-    graph[link.source][link.target] = link.cost;
-    graph[link.target][link.source] = link.cost;
-
-    // console.log(link.source, link.target, link.cost)
-  });
+  for (const link of links) {
+    const {source, target, cost} = link;
+    if (!graph[source]) graph[source] = {};
+    graph[source][target] = cost;
+    if (!graph[target]) graph[target] = {};
+    graph[target][source] = cost;
+  }
   return graph;
 }
 
