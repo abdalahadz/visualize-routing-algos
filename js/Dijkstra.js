@@ -1,11 +1,50 @@
-const graph = {
-    a: { b: 5, c: 2 },
-    b: { a: 5, c: 7, d: 8 },
-    c: { a: 2, b: 7, d: 4, e: 8 },
-    d: { b: 8, c: 4, e: 6, f: 4 },
-    e: { c: 8, d: 6, f: 3 },
-    f: { e: 3, d: 4 },
-  };
+// import * as graph from './graph.js';
+
+const links = [
+  {source: "a", target: "b", cost: 2},
+  {source: "a", target: "c", cost: 4},
+  {source: "b", target: "c", cost: 1},
+  {source: "b", target: "d", cost: 7},
+  {source: "c", target: "d", cost: 3},
+  {source: "c", target: "e", cost: 5},
+  {source: "d", target: "e", cost: 1}
+];
+const convertText = (text) => {
+  const links = [];
+  text.split("\n").forEach(line => {
+    const [source, costStr, target] = line.split(/->|\sthrough\s/);
+    const cost = parseInt(costStr);
+    links.push({source: source, target: target, cost: cost});
+  });
+  links.shift();
+  return links;
+} 
+//covnerts file type for graphing to 
+const convert = (links) => {
+  const graph = {};
+  links.forEach(link => {
+    if (!graph[link.source]) {
+      graph[link.source] = {};
+    }
+    if (!graph[link.target]) {
+      graph[link.target] = {};
+    }
+    graph[link.source][link.target] = link.cost;
+    graph[link.target][link.source] = link.cost;
+
+    // console.log(link.source, link.target, link.cost)
+  });
+  return graph;
+}
+const graph = convert(links);
+// const graph = {
+//     a: { b: 5, c: 2 },
+//     b: { a: 5, c: 7, d: 8 },
+//     c: { a: 2, b: 7, d: 4, e: 8 },
+//     d: { b: 8, c: 4, e: 6, f: 4 },
+//     e: { c: 8, d: 6, f: 3 },
+//     f: { e: 3, d: 4 },
+//   };
   
   const dijkstra = (graph, start, end) => {
     const temp = {};
@@ -45,19 +84,21 @@ const graph = {
         }
       }
 
-      const toPrint = Object.keys(shrtDist)
-          .map((vertex) => {
-            var { vertex: from, cost } = shrtDist[vertex];
-            return `${vertex}-> ${cost} through ${from}`;
-          })
-          .join("\n");
-
-      //formatted output
-      console.log("Table of costs:");
-      console.log(toPrint);
+      
       visited.push(vertex);
     }
 
+    const toPrint = Object.keys(shrtDist)
+      .map((vertex) => {
+        var { vertex: from, cost } = shrtDist[vertex];
+        return `${vertex}-> ${cost} through ${from}`;
+      })
+      .join("\n");
+
+      // formatted output
+      console.log("Table of costs:");
+      console.log(toPrint);
+      console.log(convertText(toPrint)[0]);
     var path = [];
     var next = end;
     //changes text to reflect shortest path
@@ -77,4 +118,5 @@ const graph = {
     );
   };
   
-  dijkstra(graph, "e", "c");
+  // convert(links);
+  dijkstra(graph, "a", "e");
