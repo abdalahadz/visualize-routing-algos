@@ -1,7 +1,7 @@
 import * as graph from './graph.js';
 
 //JSON uploader
-var fileInput = document.createElement('input');
+let fileInput = document.createElement('input');
 fileInput.setAttribute('type', 'file');
 fileInput.setAttribute('accept', '.json');
 fileInput.id = "fileInput";
