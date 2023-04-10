@@ -2,21 +2,49 @@ export * from "https://d3js.org/d3.v5.min.js";
 
 const container = d3.select(".network-disp");
 
+export function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+//LINK RETRIEVAL
 export async function getLink(nodeA, nodeB) {
 
     const linkTagAB = 'link' + nodeA + nodeB;
     const linkTagBA = 'link' + nodeB + nodeA;
 
-    const link = d3.selectAll("."+linkTagAB, "."+linkTagBA)
+    const link = d3.select(".links").selectAll("."+linkTagAB, "."+linkTagBA);
     return link
 }
 
-export async function getAllLink() {
+export async function getAllLinks() {
 
-    const links = d3.selectAll("line")
+    const links = d3.select(".links").selectAll("line")
     return links
 }
 
+//NODE RETRIEVAL
+export async function getNode(node) {
+
+
+    const link = d3.select(".nodes").selectAll(".node"+node);
+    return link
+}
+
+export async function getAllNodes() {
+
+    const nodes = d3.select(".nodes").selectAll("circle")
+    return nodes
+}
+
+export async function getAllNodesAsList() {
+
+    const nodes = d3.select(".nodes").selectAll("circle");
+
+    console.log(nodes.nodes());
+    return nodes
+}
+
+//HIGHLIGHT FUNCTIONS
 export async function highlightLink(nodeA, nodeB, color) {
     const link = await getLink(nodeA,nodeB);
     link
@@ -43,6 +71,8 @@ export async function resetLinkHighlights() {
         .style("opacity", 1);
     ;
 }
+
+//DRAW GRAPH
 
 export async function drawGraph(nodes, links) {
     // clear existing sim
