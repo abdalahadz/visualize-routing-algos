@@ -11,7 +11,7 @@ export async function getLink(nodeA, nodeB) {
     return link
 }
 
-export async function getAllLink() {
+export async function getAllLinks() {
 
     const links = d3.selectAll("line")
     return links
