@@ -14,6 +14,7 @@ fileInput.onchange = (event) => {
       return;
     }
 
+
     const reader = new FileReader();
     reader.readAsText(file);
   
@@ -27,6 +28,7 @@ fileInput.onchange = (event) => {
 async function processJSON(fileContents) {
   const data = JSON.parse(fileContents);
   graph.shortestPath(data);
+  graph.drawGraph(data.nodes, data.links);
 }
 
 //Display Controls
