@@ -72,6 +72,15 @@ export async function expireLinkHighlight(nodeA, nodeB) {
     ;
 }
 
+export async function resetLinkHighlight(nodeA, nodeB) {
+    const link = await getLink(nodeA,nodeB);
+    link
+        .style("stroke", 'black')
+        .style("stroke-width", 2)
+        .style("opacity", 1);
+    ;
+}
+
 export async function resetLinkHighlights() {
     const links = await getAllLinks();
     links
