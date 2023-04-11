@@ -91,6 +91,60 @@ export async function resetLinkHighlights() {
     ;
 }
 
+export async function shortestPath(graph) {
+  const INF = Number.MAX_SAFE_INTEGER;
+  const nodes = graph.nodes.map(node => node.id);
+  const distance = {};
+  const path = {};
+  
+  for (let i = 0; i < nodes.length; i++) {
+    distance[nodes[i]] = {};
+    path[nodes[i]] = {};
+    
+    for (let j = 0; j < nodes.length; j++) {
+      if (i === j) {
+        distance[nodes[i]][nodes[j]] = 0;
+        path[nodes[i]][nodes[j]] = [nodes[i]];
+      } else {
+        distance[nodes[i]][nodes[j]] = INF;
+        path[nodes[i]][nodes[j]] = [];
+      }
+    }
+  }
+  
+  graph.links.forEach(link => {
+    const { source, target, cost } = link;
+    distance[source][target] = cost;
+    distance[target][source] = cost;
+    path[source][target] = [source, target];
+    path[target][source] = [target, source];
+  });
+  
+  for (let k = 0; k < nodes.length; k++) {
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = 0; j < nodes.length; j++) {
+        if (distance[nodes[i]][nodes[j]] > distance[nodes[i]][nodes[k]] + distance[nodes[k]][nodes[j]]) {
+          distance[nodes[i]][nodes[j]] = distance[nodes[i]][nodes[k]] + distance[nodes[k]][nodes[j]];
+          path[nodes[i]][nodes[j]] = path[nodes[i]][nodes[k]].concat(path[nodes[k]][nodes[j]].slice(1));
+        }
+      }
+    }
+  }
+  
+  // Print the shortest paths as formatted strings
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = 0; j < nodes.length; j++) {
+      const fromNode = nodes[i];
+      const toNode = nodes[j];
+      const shortestDistance = distance[fromNode][toNode];
+      const shortestPath = path[fromNode][toNode].join(' -> ');
+      
+      console.log(`node ${fromNode} shortest path to ${toNode} is ${shortestPath} with distance ${shortestDistance}`);
+    }
+  }
+}
+  
+
 
 export async function floydWarshall(nodes, links) {
     const n = nodes.length;

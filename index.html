@@ -26,64 +26,45 @@
             </div>
         </nav>
         <!-- Page content-->
+        <div class="flex">
         <div class="container input-params">
             <div class="text-center mt-3">
    
                 <h4>Modify Parameters</h4>
-                <div>
-                    <label>Please create Node Objects</label>
-                    <label>Node 1:</label>
-                    <input id=" " type="text">
-                    <label>Node 2:</label>
-                    <input id="n2" type="text">
-                    <label>Node 3:</label>
-                    <input id="n3" type="text">
-                    <br>
 
-                    <label>source:</label>
-                    <input id="l1" type="text">
-                    <label>target:</label>
-                    <input id="l12" type="text">
-                    <label>cost:</label>
-                    <input id="l13" type="text">
-                    <br>
-
-                    <label>source:</label>
-                    <input id="l2" type="text">
-                    <label>target:</label>
-                    <input id="l22" type="text">
-                    <label>cost:</label>
-                    <input id="l23" type="text">
-                    <br>
-
-                    <label>source:</label>
-                    <input id="l3" type="text">
-                    <label>target:</label>
-                    <input id="l32" type="text">
-                    <label>cost:</label>
-                    <input id="l33" type="text">
-                    <br>
-
-                    <button id="localupdate">Run Local Paramaters</button>
-                </div>
-
-                <div id="import"></div>
+                <div id="import">SELECT SAMPLE TO VIEW INFORMATION</div>
                 <div class="mode">
                     <input type="button" value="Link-State" onclick="runDijkstra()">
-                    <input type="button" value="Distance-Vector" onclick="">
                 </div>
                 
             </div>
         </div>
-        <div class="container output-log">
-            <div class="text-center mt-3">
-                <h4>output Parameters</h4>
-                <section id="chat">
-                    <p><strong>Pepito</strong>: Hey everyone!</p>
-                    <p><strong>親日</strong>: こんいちは！</p>
-                </section>        
+            <div class="container output-log">
+                <h4 class="text-center">Output Console</h4>
+                <div id="chat">
+                    <p style="color:lightGray;">This is the beginning of the output prompt </p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container UI-Element">
+            <div class="flex-column">
+                <h4 class="text-center">Edit Network</h4>
+                <div class="flex">
+                    <div class="container">
+                        <p>Enter name of the Node you would like to add:</p>
+                        <input type="text" name="username" maxlength="3" size="5">
+                        <input type="submit" value="Create New node">
+                        <p>back end not done yet</p>
+                    </div>
+                    <div class="container">
+                        <p style="color:lightGray;">Edit the network here</p>
+                    </div>
+                </div>        
             </div>
         </div>
+
         <div class="container">
             <div class="text-center md-8">
                 <h4>Network</h4>
@@ -98,6 +79,7 @@
     <script type="module" src="js/scripts.js"></script>
     <script type="module" src="js/import.js"></script>
     <script type="module" src="js/UI.js"></script>
+    <script type="module" src="js/dv.js"></script>
 
     <script type="module" src="js/Dijkstra.js"></script>
 </html>
