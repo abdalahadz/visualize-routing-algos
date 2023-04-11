@@ -109,12 +109,6 @@ export async function floydWarshall(nodes, links) {
 //DRAW GRAPH
 
 export async function drawGraph(nodes, links) {
-    // check if nodes or links arrays are empty
-    if (!nodes || nodes.length === 0 || !links || links.length === 0) {
-        console.error('Nodes or links array is empty or undefined');
-        return;
-    }
-
     // clear existing sim
     container.selectAll("*").remove();
 
@@ -187,14 +181,5 @@ export async function drawGraph(nodes, links) {
     
     // update simulation every tick
     simulation.on("tick", ticked);
-
-    // calculate shortest distances between all pairs of nodes
-    const distanceMatrix = floydWarshall(nodes, links);
-    console.log("Shortest distances between all pairs of nodes:");
-    for (let i = 0; i < nodes.length; i++) {
-        for (let j = 0; j < nodes.length; j++) {
-            console.log(`Distance from ${nodes[i].id} to ${nodes[j].id}: ${distanceMatrix[i][j]}`);
-        }
-    }
 }
 
