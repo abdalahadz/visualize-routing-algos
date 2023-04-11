@@ -57,11 +57,18 @@ export async function shortestPath(nodeList, linkList) {
           if (distance[nodes[i]][nodes[j]] > distance[nodes[i]][nodes[k]] + distance[nodes[k]][nodes[j]]) {
             distance[nodes[i]][nodes[j]] = distance[nodes[i]][nodes[k]] + distance[nodes[k]][nodes[j]];
             path[nodes[i]][nodes[j]] = path[nodes[i]][nodes[k]].concat(path[nodes[k]][nodes[j]].slice(1));
+            
+            graphM.highlightLink(nodes[i], nodes[k], 'green');
+            await graphM.sleep(1000);
+            graphM.expireLinkHighlight(nodes[i],nodes[k]);
           }
         }
       }
+      await graphM.sleep(1000)
+      graphM.resetLinkHighlights();  
     }
     
+    graphM.resetLinkHighlights();
     // Print the shortest paths as formatted strings
     for (let i = 0; i < nodes.length; i++) {
       for (let j = 0; j < nodes.length; j++) {
@@ -69,8 +76,12 @@ export async function shortestPath(nodeList, linkList) {
         const toNode = nodes[j];
         const shortestDistance = distance[fromNode][toNode];
         const shortestPath = path[fromNode][toNode].join(' -> ');
+
         
-        console.log(`node ${fromNode} shortest path to ${toNode} is ${shortestPath} with distance ${shortestDistance}`);
+        graphM.highlightLink(fromNode, toNode, 'green');
+        await graphM.sleep(1000);
+        console.log(`shortest path from node ${fromNode} to ${toNode} is ${shortestPath} with distance ${shortestDistance}`);
+        // graphM.resetLinkHighlights();
       }
     }
   }
