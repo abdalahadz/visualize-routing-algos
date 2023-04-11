@@ -18,9 +18,19 @@ console.log(await graph.getAllNodesAsList());
 console.log(await graph.getAllLinksAsList());
 
 graph.resetLinkHighlights();
+/*
 graph.highlightLink('A','B','green');
 await graph.sleep(2000);
 graph.expireLinkHighlight('A','B');
 graph.highlightLink('B','C','green');
+await graph.sleep(2000);
+graph.expireLinkHighlight('B','C');
+graph.highlightLink('C','D','green');
+await graph.sleep(2000);
+graph.expireLinkHighlight('C','D');
+graph.highlightLink('D','E','green');
+await graph.sleep(2000);
+*/
+
 
 
