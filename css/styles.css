@@ -13,6 +13,42 @@ main {
   font-family: Helvetica, Arial, Sans, sans-serif;
 }
 
+.flex{
+  display: flex;
+  
+}
+
+.output-log{
+  width: 50% !important;
+}
+
+#chat {
+  content: '';
+  width: 100%;
+  height: max(300px);
+  background: white;
+  padding: 5px 10px;
+  border: 2px solid black;
+  overflow-y: scroll;
+}
+
+#chat p {
+  margin: 0 0 5px 0;
+}
+
+html, body {
+  background: #eee;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  width: calc(100% - 20px);
+  max-width: 500px;
+  margin: 0 auto;
+  font-family: Helvetica, Arial, Sans, sans-serif;
+}
+
 .chat {
   border: black dashed 2px;
   content: '';

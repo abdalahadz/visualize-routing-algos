@@ -91,6 +91,51 @@ export async function resetLinkHighlights() {
     ;
 }
 
+export async function shortestPath(graph) {
+    const INF = Number.MAX_SAFE_INTEGER;
+
+    const nodes = graph.nodes.map(node => node.id);
+    const distance = {};
+    
+    for (let i = 0; i < nodes.length; i++) {
+      distance[nodes[i]] = {};
+      
+      for (let j = 0; j < nodes.length; j++) {
+        if (i === j) {
+          distance[nodes[i]][nodes[j]] = 0;
+        } else {
+          distance[nodes[i]][nodes[j]] = INF;
+        }
+      }
+    }
+    
+    graph.links.forEach(link => {
+      const { source, target, cost } = link;
+      distance[source][target] = cost;
+      distance[target][source] = cost;
+    });
+    
+    for (let k = 0; k < nodes.length; k++) {
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = 0; j < nodes.length; j++) {
+          distance[nodes[i]][nodes[j]] = Math.min(distance[nodes[i]][nodes[j]], distance[nodes[i]][nodes[k]] + distance[nodes[k]][nodes[j]]);
+        }
+      }
+    }
+    
+    // Print the shortest distances as formatted strings
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = 0; j < nodes.length; j++) {
+      const fromNode = nodes[i];
+      const toNode = nodes[j];
+      const shortestDistance = distance[fromNode][toNode];
+      
+      console.log(`node ${fromNode} shortest distance to ${toNode} is ${shortestDistance}`);
+    }
+  }
+}
+  
+
 
 export async function floydWarshall(nodes, links) {
     const n = nodes.length;
