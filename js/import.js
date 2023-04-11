@@ -1,4 +1,5 @@
 import * as graph from './graph.js';
+const INF = Number.MAX_SAFE_INTEGER;
 
 //JSON uploader
 let fileInput = document.createElement('input');
@@ -25,7 +26,6 @@ fileInput.onchange = (event) => {
 //JSON processor
 async function processJSON(fileContents) {
   const data = JSON.parse(fileContents);
-  graph.shortestPath(data);
   graph.drawGraph(data.nodes, data.links);
 }
 
