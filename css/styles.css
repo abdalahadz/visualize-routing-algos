@@ -19,7 +19,8 @@ main {
 }
 
 .output-log{
-  width: 50% !important;
+  width: 100% !important;
+  height: auto;
 }
 
 #chat {
@@ -75,7 +76,7 @@ main {
 .network-disp {
   margin: auto;
   border-style: solid;
-  height: 750px;
+  height: 600px;
   width: 100%;
   
 }

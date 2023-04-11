@@ -28,41 +28,38 @@
         <!-- Page content-->
         <div class="flex">
         <div class="container input-params">
-            <div class="text-center mt-3">             
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-            <div class="container output-log">
-                <h4 class="text-center">Output Console</h4>
-                <style>
-                    /* Define the grid layout */
-                    .grid {
-                      display: grid;
-                      grid-template-columns: 1fr 1fr;
-                      grid-gap: 10px;
-                    }
-                  </style>
-                  
-                  <div class="grid">
-                    <textarea id="logleft" rows="10" cols="50"></textarea>
-                </div>
-                <div class="grid">
-                    <div id="import">SELECT SAMPLE TO VIEW INFORMATION<br></div>
-                    <div class="mode">
+            <div class="text-center mt-3">
+                
+                <div class="grid mode">
+                    <div id="import"><h5>Upload Custom Network:</h5></div>
+                    <div>
+                    <h5>Select Mode:</h5>
                     <input type="button" value="Link-State" onclick="runDijkstra()">
                     <input type="button" value="Distance-Vector" onclick="runDV()">
+                    </div>
                 </div>
+                
+                <div class="output-log mt-3">
+                    <h4 class="text-center">Output Console</h4>
+                        <style>
+                            /* Define the grid layout */
+                            .grid {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            grid-gap: 10px;
+                            }
+                        </style>
+                        
+                        <div class="">
+                            <textarea id="logleft" rows="4" cols="50"></textarea>
+                        </div>    
                 </div>
+
+                
             </div>
+        </div>
+            
+        
 
         </div>
 
@@ -70,6 +67,8 @@
             <div class="flex-column">       
             </div>
         </div>
+
+        
 
         <div class="container">
             <div class="text-center md-8">
