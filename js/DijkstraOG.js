@@ -100,72 +100,94 @@ const convert = (links) => {
 //   };
   
 const dijkstra = async (graph, start, end) => {
-  const visited = new Set();
-  const distances = {};
-  const previous = {};
+  const temp = {};
+  Object.keys(graph).forEach((key) => {
+    const obj = graph[key];
+    const arr = [];
+    Object.keys(obj).forEach((vert) => arr.push({ vertex: vert, cost: obj[vert] }));
+    temp[key] = arr;
+  });
 
-  // Initialize distances to Infinity and previous nodes to null
-  for (const node in graph) {
-    distances[node] = Infinity;
-    previous[node] = null;
-  }
-  distances[start] = 0;
+  var map = temp
+  var visited = [];
+  var unvisited = [start];
+  var shrtDist = { [start]: { vertex: start, cost: 0 } };
+  var vertex;
+  var last = "AA";
+  //runs through all unvisited nodes
+  while ((vertex = unvisited.shift())) {
+    // check unvisited neighbors
+    var neighbors = map[vertex].filter((n) => !visited.includes(n.vertex));
+    // console.log(vertex);
+    // Add neighbors to appropriate list
+    unvisited.push(...neighbors.map((n) => n.vertex));
+    var costToVertex = shrtDist[vertex].cost;
 
-  // Helper function to get the node with the smallest distance
-  function getSmallestNode() {
-    let smallestDistance = Infinity;
-    let smallestNode = null;
-    for (const node in distances) {
-      if (!visited.has(node) && distances[node] < smallestDistance) {
-        smallestDistance = distances[node];
-        smallestNode = node;
+    //checks for better paths through selected neighbors
+    for (let { vertex: to, cost } of neighbors) {
+      var currCostToNeighbor =
+        shrtDist[to] && shrtDist[to].cost;
+      var newCostToNeighbor = costToVertex + cost;
+      if (
+        currCostToNeighbor == undefined ||
+        newCostToNeighbor < currCostToNeighbor
+      ) {
+        // Update the table
+        shrtDist[to] = { vertex, cost: newCostToNeighbor };
       }
     }
-    return smallestNode;
-  }
+    // console.log(shrtDist[vertex].vertex);
+    console.log(last + " " + vertex+shrtDist[vertex].vertex);
+    // if (last != vertex+shrtDist[vertex].vertex)
+      await convertNew(vertex, shrtDist[vertex].vertex)
+    last = vertex+shrtDist[vertex].vertex;
+    // console.log(last)
+    // if(vertex != shrtDist[vertex].vertex){
+    //   graphM.highlightLink(vertex,shrtDist[vertex].vertex,'green');
+    //   await graphM.sleep(2000);
+    //   graphM.expireLinkHighlight(vertex,shrtDist[vertex].vertex);
+    // }
+      
+    // var keys
+    // while((keys = Object.keys(shrtDist))){
+    //   console.log(keys);
+    // }
+    const toPrint = Object.keys(shrtDist)
+    .map((vertex) => {
+      var { vertex: from, cost } = shrtDist[vertex];
+      return `${vertex}-> ${cost} through ${from}`;
+    })
+    .join("\n");
 
-  // Main loop
-  let currentNode = getSmallestNode();
-  while (currentNode !== null) {
-    // Update distances to neighbors of current node
-    for (const neighbor in graph[currentNode]) {
-      const distance = graph[currentNode][neighbor];
-      const totalDistance = distances[currentNode] + distance;
-      if (totalDistance < distances[neighbor]) {
-        console.log(currentNode + neighbor)
-        await convertNew(currentNode, neighbor)
-        distances[neighbor] = totalDistance;
-        previous[neighbor] = currentNode;
-      }
-    }
-
-    // Mark current node as visited
-    visited.add(currentNode);
-
-    // Get the next smallest unvisited node
-    currentNode = getSmallestNode();
-
-    // Print the cost table
+    
+    // convertText(toPrint);
+    
+    // formatted output
     console.log("Table of costs:");
-    for (const node in distances) {
-      console.log(`${node}-> ${distances[node]} through ${previous[node]}`);
+    console.log(toPrint);
+    visited.push(vertex);
+    // break;
+  }
+
+    // console.log(convertText(toPrint)[0]);
+  var path = [];
+  var next = end;
+  //changes text to reflect shortest path
+  while (true) {
+    path.unshift(next);
+    if (next === start) {
+      break;
     }
-    // console.log("------------------");
+    next = shrtDist[next].vertex;
   }
-
-  // Build the path from start to end
-  const path = [];
-  let node = end;
-  while (node !== null) {
-    path.unshift(node);
-    node = previous[node];
-  }
-
-  // Return the shortest path and its total weight
-  const weight = distances[end];
-  const output = `Shortest path: ${path.join(" -> ")} with weight ${weight}`;
+  const output = "Shortest path" + " "+ path.join(" -> ") + " using a cost of" + " "+ shrtDist[end].cost;
   console.log(output);
-
+  // console.log(
+  //   "Shortest path",
+  //   path.join(" -> "),
+  //   "using a cost of",
+  //   shrtDist[end].cost
+  // );
   convertNew2(output);
-  // return { path, weight };
-}
+  // return convertText(toPrint);
+};
