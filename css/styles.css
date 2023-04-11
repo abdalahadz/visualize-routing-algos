@@ -447,6 +447,10 @@ textarea {
   line-height: inherit;
 }
 
+textarea#logleft {
+  font-size: 10px;
+}
+
 button,
 select {
   text-transform: none;
