@@ -51,7 +51,10 @@ export async function getAllNodes() {
 export async function getAllNodesAsList() {
 
     const nodes = await getAllNodes()
-    return nodes.data().map(({ id }) => ({ id }));
+    return nodes.data().map(item => {
+        return {
+            id: item.id
+        }});
 }
 
 //HIGHLIGHT FUNCTIONS
