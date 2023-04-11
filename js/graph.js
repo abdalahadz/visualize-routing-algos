@@ -2,6 +2,8 @@ export * from "https://d3js.org/d3.v5.min.js";
 
 const container = d3.select(".network-disp");
 
+
+
 export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -92,10 +94,20 @@ export async function resetLinkHighlights() {
 }
 
 export async function shortestPath(graph) {
+  const logl = document.getElementById("logleft");
   const INF = Number.MAX_SAFE_INTEGER;
   const nodes = graph.nodes.map(node => node.id);
   const distance = {};
   const path = {};
+
+
+  console.log = function(...messages) {
+    for (let i = 0; i < messages.length; i++) {
+      logl.value += messages[i] + "\n";
+    }
+  };
+
+
   
   for (let i = 0; i < nodes.length; i++) {
     distance[nodes[i]] = {};
