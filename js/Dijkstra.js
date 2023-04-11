@@ -28,7 +28,7 @@ window.runDijkstra = async function runDijkstra() {
 // ];
 
 async function convertNew(source, target){
-  graphM.highlightLink('B',target,'green');
+  //graphM.highlightLink('B',target,'green');
   console.log(source, target)
   if(source != target && source != undefined && target != undefined){
     graphM.highlightLink(target,source,'green');
