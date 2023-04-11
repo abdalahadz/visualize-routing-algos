@@ -23,15 +23,18 @@ async function AddNode(){
     var Links = await graph.getAllLinksAsList()
 
     const hasId1 = Nodes.some(obj => obj.hasOwnProperty('id') && obj.id === Node1);
+    const hasId2 = Nodes.some(obj => obj.hasOwnProperty('id') && obj.id === Node2);
 
-    if (!hasId1) {
+    if (!hasId1 && !hasId2){
+        alert("one of your nodes needs to currently exist in graph")
+        return;
+    }
+
+    else if (!hasId1) {
         Nodes.push({"id": Node1});
         console.log("Added Node: " + Node1)
     }
-    
-    const hasId2 = Nodes.some(obj => obj.hasOwnProperty('id') && obj.id === Node2);
-
-    if (!hasId2) {
+    else if (!hasId2) {
         Nodes.push({"id": Node2});
         console.log("Added Node: " + Node2)
     }
