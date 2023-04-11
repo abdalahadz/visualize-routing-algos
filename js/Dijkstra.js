@@ -15,6 +15,8 @@ window.runDijkstra = async function runDijkstra() {
   dijkstra(graph, start, end);
 }
 
+
+
 // const links = [
 //   {source: "a", target: "b", cost: 2},
 //   {source: "a", target: "c", cost: 4},
@@ -27,6 +29,7 @@ window.runDijkstra = async function runDijkstra() {
 
 const convertText = (text) => {
   // const links = [];
+  console.log("convert");
   text.split("\n").forEach(async line => {
     const [source, costStr, target] = line.split(/->|\sthrough\s/);
     // const cost = parseInt(costStr);
@@ -35,6 +38,8 @@ const convertText = (text) => {
       return;
     else
       graphM.highlightLink(source,target,'green');
+
+      // graphM.highlightLink(source,target,'green');
 
     await graphM.sleep(2000);
     graphM.expireLinkHighlight(source,target);
@@ -115,11 +120,13 @@ const dijkstra = (graph, start, end) => {
     })
     .join("\n");
 
-    console.log(convertText(toPrint));
+    
+    convertText(toPrint);
     // formatted output
     console.log("Table of costs:");
     console.log(toPrint);
     visited.push(vertex);
+    // break;
   }
 
     // console.log(convertText(toPrint)[0]);
