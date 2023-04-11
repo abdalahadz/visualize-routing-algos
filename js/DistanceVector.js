@@ -21,9 +21,11 @@ export async function shortestPath(nodeList, linkList) {
   
   
     console.log = function(...messages) {
-      for (let i = 0; i < messages.length; i++) {
+        for (let i = 0; i < messages.length; i++) {
         logl.value += messages[i] + "\n";
-      }
+        }
+        logl.focus();
+        logl.scrollTop = logr.scrollHeight;
     };
   
   
