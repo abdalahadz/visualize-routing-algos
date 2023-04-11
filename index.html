@@ -26,6 +26,7 @@
             </div>
         </nav>
         <!-- Page content-->
+        <div class="flex">
         <div class="container input-params">
             <div class="text-center mt-3">
    
@@ -75,15 +76,32 @@
                 
             </div>
         </div>
-        <div class="container output-log">
-            <div class="text-center mt-3">
-                <h4>output Parameters</h4>
-                <section id="chat">
-                    <p><strong>Pepito</strong>: Hey everyone!</p>
-                    <p><strong>親日</strong>: こんいちは！</p>
-                </section>        
+            <div class="container output-log">
+                <h4 class="text-center">Output Console</h4>
+                <div id="chat">
+                    <p style="color:lightGray;">This is the beginning of the output prompt </p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container UI-Element">
+            <div class="flex-column">
+                <h4 class="text-center">Edit Network</h4>
+                <div class="flex">
+                    <div class="container">
+                        <p>Enter name of the Node you would like to add:</p>
+                        <input type="text" name="username" maxlength="3" size="5">
+                        <input type="submit" value="Create New node">
+                        <p>back end not done yet</p>
+                    </div>
+                    <div class="container">
+                        <p style="color:lightGray;">Edit the network here</p>
+                    </div>
+                </div>        
             </div>
         </div>
+
         <div class="container">
             <div class="text-center md-8">
                 <h4>Network</h4>
