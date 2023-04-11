@@ -4,20 +4,15 @@
 		{"id": "B"},
 		{"id": "C"},
 		{"id": "D"},
-		{"id": "E"},
-		{"id": "F"}
+		{"id": "E"}
 	],
 	"links": [
-		{"source": "A", "target": "B", "cost": 3},
-		{"source": "A", "target": "C", "cost": 5},
-		{"source": "B", "target": "C", "cost": 2},
+		{"source": "A", "target": "B", "cost": 2},
+		{"source": "A", "target": "C", "cost": 3},
+		{"source": "B", "target": "C", "cost": 1},
 		{"source": "B", "target": "D", "cost": 4},
-		{"source": "C", "target": "D", "cost": 1},
-		{"source": "C", "target": "F", "cost": 2},
-		{"source": "D", "target": "E", "cost": 1},
-		{"source": "E", "target": "A", "cost": 3},
-		{"source": "E", "target": "F", "cost": 5},
-		{"source": "F", "target": "B", "cost": 4},
-		{"source": "F", "target": "C", "cost": 2}
+		{"source": "C", "target": "D", "cost": 2},
+		{"source": "C", "target": "E", "cost": 5},
+		{"source": "D", "target": "E", "cost": 1}
 	]
 }

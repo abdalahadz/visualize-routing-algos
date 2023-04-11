@@ -25,7 +25,24 @@ window.runDijkstra = async function runDijkstra() {
 }
 
 
+<<<<<<< HEAD
+
+// const links = [
+//   {source: "a", target: "b", cost: 2},
+//   {source: "a", target: "c", cost: 4},
+//   {source: "b", target: "c", cost: 1},
+//   {source: "b", target: "d", cost: 7},
+//   {source: "c", target: "d", cost: 3},
+//   {source: "c", target: "e", cost: 5},
+//   {source: "d", target: "e", cost: 1}
+// ];
+
+async function convertNew(source, target){
+  //graphM.highlightLink('B',target,'green');
+  console.log(source, target)
+=======
 async function LightPath(source, target){
+>>>>>>> faf3a2238fa614f0fc20d22110957514d27b2c8e
   if(source != target && source != undefined && target != undefined){
     // highlights path
     graphM.highlightLink(source,target,'green');

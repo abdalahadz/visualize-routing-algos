@@ -1,23 +1,26 @@
 {
-    "nodes": [
-        {"id": "A"},
-        {"id": "B"},
-        {"id": "C"},
-        {"id": "D"},
-        {"id": "E"},
-        {"id": "F"}
-    ],
-    "links": [
-        {"source": "A", "target": "B", "cost": 4},
-        {"source": "A", "target": "C", "cost": 2},
-        {"source": "A", "target": "D", "cost": 1},
-        {"source": "A", "target": "E", "cost": 5},
-        {"source": "B", "target": "C", "cost": 3},
-        {"source": "B", "target": "E", "cost": 5},
-        {"source": "B", "target": "F", "cost": 1},
-        {"source": "C", "target": "D", "cost": 5},
-        {"source": "C", "target": "E", "cost": 2},
-        {"source": "D", "target": "F", "cost": 2},
-        {"source": "E", "target": "F", "cost": 3}
-    ]
+	"nodes": [
+		{"id": "A"},
+		{"id": "B"},
+		{"id": "C"},
+		{"id": "D"},
+		{"id": "E"},
+		{"id": "F"},
+		{"id": "G"}
+	],
+	"links": [
+		{"source": "A", "target": "B", "cost": 1},
+		{"source": "A", "target": "D", "cost": 2},
+		{"source": "A", "target": "E", "cost": 3},
+		{"source": "B", "target": "C", "cost": 2},
+		{"source": "B", "target": "D", "cost": 5},
+		{"source": "B", "target": "F", "cost": 1},
+		{"source": "C", "target": "E", "cost": 4},
+		{"source": "C", "target": "G", "cost": 2},
+		{"source": "D", "target": "E", "cost": 3},
+		{"source": "D", "target": "F", "cost": 2},
+		{"source": "E", "target": "F", "cost": 1},
+		{"source": "E", "target": "G", "cost": 3},
+		{"source": "F", "target": "G", "cost": 4}
+	]
 }
