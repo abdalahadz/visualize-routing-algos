@@ -94,7 +94,6 @@ export async function drawGraph(nodes, links) {
     .attr("width", width)
     .attr("height", height);
 
-
     // setup simulation
     const simulation = d3.forceSimulation(nodes)
     .force("link", d3.forceLink(links).id(d => d.id))
@@ -140,6 +139,18 @@ export async function drawGraph(nodes, links) {
     .append("text")
     .attr("class", d =>'linkLabel'+d.source.id + d.target.id)
     .text(d => d.cost);
+
+    // calculate shortest paths between all pairs of nodes
+    const distanceMatrix = calculateShortestDistances(nodes, links);
+
+    // output shortest distances to console
+    console.log("Shortest distances between all pairs of nodes:");
+    for (let i = 0; i < nodes.length; i++) {
+        for (let j = 0; j < nodes.length; j++) {
+            console.log(`Distance from ${nodes[i].id} to ${nodes[j].id}: ${distanceMatrix[i][j]}`);
+        }
+    }
+
 
     // tick function
     function ticked() {
