@@ -16,9 +16,6 @@ window.runDijkstra = async function runDijkstra() {
   const start = Object.keys(graph)[0];
   const end = Object.keys(graph)[Object.keys(graph).length - 1];
 
-  console.log(links);
-  console.log(graph);
-
   dijkstra(graph, start, end);
 }
 
