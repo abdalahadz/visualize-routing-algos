@@ -15,9 +15,6 @@ window.runDijkstra = async function runDijkstra() {
   dijkstra(graph, start, end);
 }
 
-
-<<<<<<< HEAD
-
 // const links = [
 //   {source: "a", target: "b", cost: 2},
 //   {source: "a", target: "c", cost: 4},
@@ -28,12 +25,7 @@ window.runDijkstra = async function runDijkstra() {
 //   {source: "d", target: "e", cost: 1}
 // ];
 
-async function convertNew(source, target){
-  //graphM.highlightLink('B',target,'green');
-  console.log(source, target)
-=======
 async function LightPath(source, target){
->>>>>>> faf3a2238fa614f0fc20d22110957514d27b2c8e
   if(source != target && source != undefined && target != undefined){
     // highlights path
     graphM.highlightLink(source,target,'green');
