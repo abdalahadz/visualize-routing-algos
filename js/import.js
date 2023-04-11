@@ -25,7 +25,6 @@ fileInput.onchange = (event) => {
 //JSON processor
 async function processJSON(fileContents) {
   const data = JSON.parse(fileContents);
-  console.log(data)
   graph.drawGraph(data.nodes, data.links)
 }
 

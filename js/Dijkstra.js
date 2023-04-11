@@ -1,11 +1,13 @@
 import * as graphM from './graph.js';
 
 window.runDijkstra = async function runDijkstra() {
+  graphM.resetLinkHighlights();
+
   const links = await graphM.getAllLinksAsList();
 
   const graph = convert(links);
   const start = Object.keys(graph)[0];
-  const end = Object.keys(graph)[Object.keys(graph).length - 1]
+  const end = Object.keys(graph)[Object.keys(graph).length - 1];
 
   console.log(links);
   console.log(graph);
@@ -25,16 +27,16 @@ window.runDijkstra = async function runDijkstra() {
 
 const convertText = (text) => {
   // const links = [];
-  text.split("\n").forEach(line => {
+  text.split("\n").forEach(async line => {
     const [source, costStr, target] = line.split(/->|\sthrough\s/);
     // const cost = parseInt(costStr);
     console.log(source, target)
     if(source === target)
       return;
     else
-      graphM.highlightLink(source,target,'red');
+      graphM.highlightLink(source,target,'green');
 
-    graphM.sleep(2000)
+    await graphM.sleep(2000);
     graphM.expireLinkHighlight(source,target);
       // graph.
     // links.push({source: source, target: target, cost: cost});
