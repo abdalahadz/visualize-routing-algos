@@ -27,6 +27,10 @@ fileInput.onchange = (event) => {
 async function processJSON(fileContents) {
   const data = JSON.parse(fileContents);
   graph.drawGraph(data.nodes, data.links);
+
+  const log = document.getElementById("logleft");
+  log.value='';
+
 }
 
 //Display Controls
