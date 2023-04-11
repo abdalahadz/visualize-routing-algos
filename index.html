@@ -28,40 +28,45 @@
         <!-- Page content-->
         <div class="flex">
         <div class="container input-params">
-            <div class="text-center mt-3">
-   
-                <h4>Modify Parameters</h4>
-
-                <div id="import">SELECT SAMPLE TO VIEW INFORMATION</div>
-                <div class="mode">
-                    <input type="button" value="Link-State" onclick="runDijkstra()">
-                </div>
-                
+            <div class="text-center mt-3">             
             </div>
         </div>
+
+
+
+
+
+
+
+
+
+
             <div class="container output-log">
                 <h4 class="text-center">Output Console</h4>
-                <div id="chat">
-                    <p style="color:lightGray;">This is the beginning of the output prompt </p>
+                <style>
+                    /* Define the grid layout */
+                    .grid {
+                      display: grid;
+                      grid-template-columns: 1fr 1fr;
+                      grid-gap: 10px;
+                    }
+                  </style>
+                  
+                  <div class="grid">
+                    <textarea id="logleft" rows="10" cols="50"></textarea>
+                </div>
+                <div class="grid">
+                    <div id="import">SELECT SAMPLE TO VIEW INFORMATION<br></div>
+                    <div class="mode">
+                    <input type="button" value="Link-State" onclick="runDijkstra()">
+                </div>
                 </div>
             </div>
 
         </div>
 
         <div class="container UI-Element">
-            <div class="flex-column">
-                <h4 class="text-center">Edit Network</h4>
-                <div class="flex">
-                    <div class="container">
-                        <p>Enter name of the Node you would like to add:</p>
-                        <input type="text" name="username" maxlength="3" size="5">
-                        <input type="submit" value="Create New node">
-                        <p>back end not done yet</p>
-                    </div>
-                    <div class="container">
-                        <p style="color:lightGray;">Edit the network here</p>
-                    </div>
-                </div>        
+            <div class="flex-column">       
             </div>
         </div>
 

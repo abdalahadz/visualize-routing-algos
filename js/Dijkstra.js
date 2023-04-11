@@ -1,5 +1,14 @@
 import * as graphM from './graph.js';
 
+
+
+const logr = document.getElementById("logleft");
+console.log = function(...messages) {
+  for (let i = 0; i < messages.length; i++) {
+    logr.value += messages[i] + "\n";
+  }
+};
+
 window.runDijkstra = async function runDijkstra() {
   graphM.resetLinkHighlights();
 
