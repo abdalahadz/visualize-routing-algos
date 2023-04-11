@@ -12,7 +12,8 @@ export async function getLink(nodeA, nodeB) {
     const linkTagAB = 'link' + nodeA + nodeB;
     const linkTagBA = 'link' + nodeB + nodeA;
 
-    const link = d3.select(".links").selectAll("."+linkTagAB, "."+linkTagBA);
+    const link = d3.selectAll("."+linkTagAB).nodes().length == 0 ? d3.selectAll("."+linkTagBA) : d3.selectAll("."+linkTagAB)
+
     return link
 }
 
