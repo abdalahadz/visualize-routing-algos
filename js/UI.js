@@ -15,25 +15,34 @@ async function OutputLog(title,inputText) {
 document.getElementById("New-Node-Button").addEventListener("click", AddNode);
 
 async function AddNode(){
-    
+    const Node1 = document.getElementById("New-Node-Name").value;
+    const Node2 = document.getElementById("New-Node-Link-Name").value;
+    const Value = document.getElementById("New-Node-Link-Value").value;
+
     var Nodes = await graph.getAllNodesAsList()
     var Links = await graph.getAllLinksAsList()
-    // console.log("[AddNode]" + Links)
-    Nodes.push({"id": document.getElementById("New-Node-Name").value});
-    // Nodes.push({"id": document.getElementById("New-Node-Link-Name").value});
 
+    const hasId1 = Nodes.some(obj => obj.hasOwnProperty('id') && obj.id === Node1);
+
+    if (!hasId1) {
+        Nodes.push({"id": Node1});
+        console.log("Added Node: " + Node1)
+    }
     
-    Links.push({"source": document.getElementById("New-Node-Link-Name").value, "target": document.getElementById("New-Node-Name").value, "cost": document.getElementById("New-Node-Link-Value").value});
+    const hasId2 = Nodes.some(obj => obj.hasOwnProperty('id') && obj.id === Node2);
 
-
-    // console.log("[AddNode]" + Links)
+    if (!hasId2) {
+        Nodes.push({"id": Node2});
+        console.log("Added Node: " + Node2)
+    }
+    
+    Links.push({"source": Node1, "target": Node2, "cost": Value});
 
 
     graph.drawGraph(Nodes, Links)
     document.getElementById("New-Node-Name").value = '';
 
 }
-
 //OutputLog("Link-State", "from A to C")
 //OutputLog("Distance-Vector", "from A to B")
 
