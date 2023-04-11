@@ -83,25 +83,18 @@ export async function resetLinkHighlights() {
 
 
 export async function floydWarshall(nodes, links) {
-    // initialize distance matrix with maximum value
-    const dist = Array(nodes.length).fill().map(() => Array(nodes.length).fill(Infinity));
-    for (let i = 0; i < nodes.length; i++) {
-      dist[i][i] = 0;
-    }
-    
-    // populate distance matrix with link costs
-    for (const link of links) {
-      const sourceIdx = nodes.findIndex(node => node.id === link.source.id);
-      const targetIdx = nodes.findIndex(node => node.id === link.target.id);
-      dist[sourceIdx][targetIdx] = link.cost;
-      dist[targetIdx][sourceIdx] = link.cost; // assuming undirected graph
-    }
+    const n = nodes.length;
+    const dist = new Array(n).fill().map(() => new Array(n).fill(Infinity));
   
-    // run Floyd-Warshall algorithm
-    for (let k = 0; k < nodes.length; k++) {
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = 0; j < nodes.length; j++) {
-          if (dist[i][k] + dist[k][j] < dist[i][j]) {
+    links.forEach(link => {
+      const { source, target, cost } = link;
+      dist[source.index][target.index] = cost;
+    });
+  
+    for (let k = 0; k < n; k++) {
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          if (dist[i][j] > dist[i][k] + dist[k][j]) {
             dist[i][j] = dist[i][k] + dist[k][j];
           }
         }
@@ -116,79 +109,80 @@ export async function floydWarshall(nodes, links) {
 //DRAW GRAPH
 
 export async function drawGraph(nodes, links) {
+    // check if nodes or links arrays are empty
+    if (!nodes || nodes.length === 0 || !links || links.length === 0) {
+        console.error('Nodes or links array is empty or undefined');
+        return;
+    }
+
     // clear existing sim
     container.selectAll("*").remove();
-        
+
     // svg
     const width = container.node().getBoundingClientRect().width;
     const height = container.node().getBoundingClientRect().height;
     const svg = container.append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
+        .attr("width", width)
+        .attr("height", height);
 
     // setup simulation
     const simulation = d3.forceSimulation(nodes)
-    .force("link", d3.forceLink(links).id(d => d.id))
-    .force("charge", d3.forceManyBody().strength(-3000))
-    .force("center", d3.forceCenter(width / 2, height / 2));
+        .force("link", d3.forceLink(links).id(d => d.id))
+        .force("charge", d3.forceManyBody().strength(-3000))
+        .force("center", d3.forceCenter(width / 2, height / 2));
 
     // add links to svg
     const link = svg.append("g")
-    .attr("class", "links")
-    .selectAll("line")
-    .data(links)
-    .enter().append("line")
-    .attr("stroke-width", 2)
-    .attr("class", d =>'link'+d.source.id + d.target.id);
+        .attr("class", "links")
+        .selectAll("line")
+        .data(links)
+        .enter().append("line")
+        .attr("stroke-width", 2)
+        .attr("class", d => 'link' + d.source.id + d.target.id);
 
     // add nodes to svg
     const node = svg.append("g")
-    .attr("class", "nodes")
-    .selectAll("circle")
-    .data(nodes)
-    .enter().append("circle")
-    .attr("r", 25)
-    .attr("class", d => "node" + d.id);
+        .attr("class", "nodes")
+        .selectAll("circle")
+        .data(nodes)
+        .enter().append("circle")
+        .attr("r", 25)
+        .attr("class", d => "node" + d.id);
 
     // add labels for the nodes
     const label = svg.append("g")
-    .attr("class", "nodelabels")
-    .selectAll(".label")
-    .data(nodes)
-    .enter().append("text")
-    .attr("class", d => "nodeLabel" + d.id)
-    .attr("text-anchor", "middle")
-    .attr("dy", ".35em")
-    .style("stroke","white")
-    .text(d => d.id);
+        .attr("class", "nodelabels")
+        .selectAll(".label")
+        .data(nodes)
+        .enter().append("text")
+        .attr("class", d => "nodeLabel" + d.id)
+        .attr("text-anchor", "middle")
+        .attr("dy", ".35em")
+        .style("stroke", "white")
+        .text(d => d.id);
 
     //add text to link edges
     const linkLabel = svg.append("g")
-    .attr("class", "linklabels")
-    .selectAll("text")
-    .data(links)
-    .enter()
-    .append("text")
-    .attr("class", d =>'linkLabel'+d.source.id + d.target.id)
-    .text(d => d.cost);
+        .attr("class", "linklabels")
+        .selectAll("text")
+        .data(links)
+        .enter()
+        .append("text")
+        .attr("class", d => 'linkLabel' + d.source.id + d.target.id)
+        .text(d => d.cost);
 
     // tick function
     function ticked() {
-        link
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y);
-        node
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y);
-        label
-        .attr("x", d => d.x)
-        .attr("y", d => d.y);
-        linkLabel
-        .attr("x", d => (d.source.x + d.target.x) / 2)
-        .attr("y", d => (d.source.y + d.target.y) / 2);
+        link.attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
+        node.attr("cx", d => d.x)
+            .attr("cy", d => d.y);
+        label.attr("x", d => d.x)
+            .attr("y", d => d.y);
+        linkLabel.attr("x", d => (d.source.x + d.target.x) / 2)
+            .attr("y", d => (d.source.y + d.target.y) / 2);
     }
     
     // update simulation every tick
