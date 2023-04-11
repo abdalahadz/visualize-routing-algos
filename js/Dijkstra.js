@@ -27,13 +27,41 @@ window.runDijkstra = async function runDijkstra() {
 //   {source: "d", target: "e", cost: 1}
 // ];
 
+async function convertNew(source, target){
+  graphM.highlightLink('B',target,'green');
+  console.log(source, target)
+  if(source != target && source != undefined && target != undefined){
+    graphM.highlightLink(target,source,'green');
+    graphM.highlightLink(source,target,'green');
+
+    await graphM.sleep(2000);
+    graphM.expireLinkHighlight(target,source);
+    graphM.expireLinkHighlight(source,target);
+  }
+}
+
+async function convertNew2(text){
+  graphM.resetLinkHighlights();
+  const letters = text.split(" ").filter(word => word.length === 1);
+  console.log(letters)
+  for (let i = 0; i < letters.length - 1; i++) {
+    if(letters[i+1] != 'a'){
+      graphM.highlightLink(letters[i],letters[i+1],'green');
+      graphM.highlightLink(letters[i+1],letters[i],'green');
+
+      await graphM.sleep(2000);
+    }
+  }
+}
+
+
 const convertText = (text) => {
   // const links = [];
-  console.log("convert");
+  // console.log("convert");
   text.split("\n").forEach(async line => {
     const [source, costStr, target] = line.split(/->|\sthrough\s/);
     // const cost = parseInt(costStr);
-    console.log(source, target)
+    // console.log(source, target)
     if(source === target)
       return;
     else
@@ -71,7 +99,7 @@ const convert = (links) => {
 //     f: { e: 3, d: 4 },
 //   };
   
-const dijkstra = (graph, start, end) => {
+const dijkstra = async (graph, start, end) => {
   const temp = {};
   Object.keys(graph).forEach((key) => {
     const obj = graph[key];
@@ -85,14 +113,14 @@ const dijkstra = (graph, start, end) => {
   var unvisited = [start];
   var shrtDist = { [start]: { vertex: start, cost: 0 } };
   var vertex;
+  var last = "AA";
   //runs through all unvisited nodes
   while ((vertex = unvisited.shift())) {
     // check unvisited neighbors
     var neighbors = map[vertex].filter((n) => !visited.includes(n.vertex));
-
+    // console.log(vertex);
     // Add neighbors to appropriate list
     unvisited.push(...neighbors.map((n) => n.vertex));
-
     var costToVertex = shrtDist[vertex].cost;
 
     //checks for better paths through selected neighbors
@@ -108,7 +136,18 @@ const dijkstra = (graph, start, end) => {
         shrtDist[to] = { vertex, cost: newCostToNeighbor };
       }
     }
-
+    // console.log(shrtDist[vertex].vertex);
+    console.log(last + " " + vertex+shrtDist[vertex].vertex);
+    if (last != vertex+shrtDist[vertex].vertex)
+      await convertNew(vertex, shrtDist[vertex].vertex)
+    last = vertex+shrtDist[vertex].vertex;
+    // console.log(last)
+    // if(vertex != shrtDist[vertex].vertex){
+    //   graphM.highlightLink(vertex,shrtDist[vertex].vertex,'green');
+    //   await graphM.sleep(2000);
+    //   graphM.expireLinkHighlight(vertex,shrtDist[vertex].vertex);
+    // }
+      
     // var keys
     // while((keys = Object.keys(shrtDist))){
     //   console.log(keys);
@@ -121,7 +160,8 @@ const dijkstra = (graph, start, end) => {
     .join("\n");
 
     
-    convertText(toPrint);
+    // convertText(toPrint);
+    
     // formatted output
     console.log("Table of costs:");
     console.log(toPrint);
@@ -140,12 +180,14 @@ const dijkstra = (graph, start, end) => {
     }
     next = shrtDist[next].vertex;
   }
-
-  console.log(
-    "Shortest path",
-    path.join(" -> "),
-    "using a cost of",
-    shrtDist[end].cost
-  );
+  const output = "Shortest path" + " "+ path.join(" -> ") + " using a cost of" + " "+ shrtDist[end].cost;
+  console.log(output);
+  // console.log(
+  //   "Shortest path",
+  //   path.join(" -> "),
+  //   "using a cost of",
+  //   shrtDist[end].cost
+  // );
+  convertNew2(output);
   // return convertText(toPrint);
 };
