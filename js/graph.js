@@ -97,7 +97,7 @@ export async function resetLinkHighlights() {
 //DRAW GRAPH
 export async function drawGraph(nodes, links) {
     // clear existing sim
-    container.selectAll("*").remove();
+    d3.select(".network-disp").selectAll("*").remove();
 
     // svg
     const width = container.node().getBoundingClientRect().width;
