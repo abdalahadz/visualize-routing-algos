@@ -16,67 +16,29 @@ window.runDijkstra = async function runDijkstra() {
 }
 
 
-
-// const links = [
-//   {source: "a", target: "b", cost: 2},
-//   {source: "a", target: "c", cost: 4},
-//   {source: "b", target: "c", cost: 1},
-//   {source: "b", target: "d", cost: 7},
-//   {source: "c", target: "d", cost: 3},
-//   {source: "c", target: "e", cost: 5},
-//   {source: "d", target: "e", cost: 1}
-// ];
-
-async function convertNew(source, target){
-  // graphM.highlightLink('B',target,'green');
-  console.log(source, target)
+async function LightPath(source, target){
   if(source != target && source != undefined && target != undefined){
-    // graphM.highlightLink(target,source,'green');
+    // highlights path
     graphM.highlightLink(source,target,'green');
-
+    // waits 2 seconds
     await graphM.sleep(2000);
-    // graphM.expireLinkHighlight(target,source);
+    // expires the highlight, still leaves residue
     graphM.expireLinkHighlight(source,target);
   }
 }
 
-async function convertNew2(text){
+async function LightFinal(text){
+  // removes all preivious highlighting 
   graphM.resetLinkHighlights();
+  // splits output text so to get nodes of final path
   const letters = text.split(" ").filter(word => word.length === 1);
-  console.log(letters)
+  // loop lights path in order, waiting 2 seconds between each step for visualisation purposes
   for (let i = 0; i < letters.length - 1; i++) {
-    if(letters[i+1] != 'a'){
-      // graphM.highlightLink(letters[i],letters[i+1],'green');
-      graphM.highlightLink(letters[i+1],letters[i],'green');
-
-      await graphM.sleep(2000);
-    }
+    graphM.highlightLink(letters[i+1],letters[i],'green');
+    await graphM.sleep(2000);
   }
 }
 
-
-const convertText = (text) => {
-  // const links = [];
-  // console.log("convert");
-  text.split("\n").forEach(async line => {
-    const [source, costStr, target] = line.split(/->|\sthrough\s/);
-    // const cost = parseInt(costStr);
-    // console.log(source, target)
-    if(source === target)
-      return;
-    else
-      graphM.highlightLink(source,target,'green');
-
-      // graphM.highlightLink(source,target,'green');
-
-    await graphM.sleep(2000);
-    graphM.expireLinkHighlight(source,target);
-      // graph.
-    // links.push({source: source, target: target, cost: cost});
-  });
-  // links.shift();
-  // return links;
-} 
 //covnerts file type for graphing to 
 const convert = (links) => {
   const graph = {};
@@ -90,28 +52,20 @@ const convert = (links) => {
   return graph;
 }
 
-// const graph = {
-//     a: { b: 5, c: 2 },
-//     b: { a: 5, c: 7, d: 8 },
-//     c: { a: 2, b: 7, d: 4, e: 8 },
-//     d: { b: 8, c: 4, e: 6, f: 4 },
-//     e: { c: 8, d: 6, f: 3 },
-//     f: { e: 3, d: 4 },
-//   };
-  
+
 const dijkstra = async (graph, start, end) => {
   const visited = new Set();
   const distances = {};
   const previous = {};
 
-  // Initialize distances to Infinity and previous nodes to null
+  // initialize distances to infinity and previous nodes to null
   for (const node in graph) {
     distances[node] = Infinity;
     previous[node] = null;
   }
   distances[start] = 0;
 
-  // Helper function to get the node with the smallest distance
+  // helper function to get the smallest distance node
   function getSmallestNode() {
     let smallestDistance = Infinity;
     let smallestNode = null;
@@ -124,36 +78,34 @@ const dijkstra = async (graph, start, end) => {
     return smallestNode;
   }
 
-  // Main loop
   let currentNode = getSmallestNode();
   while (currentNode !== null) {
-    // Update distances to neighbors of current node
+    // finds distances to neighbors of current node
     for (const neighbor in graph[currentNode]) {
       const distance = graph[currentNode][neighbor];
       const totalDistance = distances[currentNode] + distance;
       if (totalDistance < distances[neighbor]) {
-        console.log(currentNode + neighbor)
-        await convertNew(currentNode, neighbor)
+        // call function to light path
+        await LightPath(currentNode, neighbor)
         distances[neighbor] = totalDistance;
         previous[neighbor] = currentNode;
       }
     }
 
-    // Mark current node as visited
+    // mark current node as visited
     visited.add(currentNode);
 
-    // Get the next smallest unvisited node
+    // get the next smallest unvisited node
     currentNode = getSmallestNode();
 
-    // Print the cost table
+    // print the cost table
     console.log("Table of costs:");
     for (const node in distances) {
       console.log(`${node}-> ${distances[node]} through ${previous[node]}`);
     }
-    // console.log("------------------");
   }
 
-  // Build the path from start to end
+  // build the path from start to end
   const path = [];
   let node = end;
   while (node !== null) {
@@ -161,11 +113,10 @@ const dijkstra = async (graph, start, end) => {
     node = previous[node];
   }
 
-  // Return the shortest path and its total weight
+  // print the shortest path and its total weight
   const weight = distances[end];
   const output = `Shortest path: ${path.join(" -> ")} with weight ${weight}`;
   console.log(output);
-
-  convertNew2(output);
-  // return { path, weight };
+  // call function to highlight final path
+  LightFinal(output);
 }
