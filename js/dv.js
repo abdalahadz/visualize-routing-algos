@@ -26,7 +26,7 @@ fileInput.onchange = (event) => {
 //JSON processor
 async function processJSON(fileContents) {
   const data = JSON.parse(fileContents);
-  console.log(graph.shortestPath(data));
+  graph.shortestPath(data);
 }
 
 //Display Controls

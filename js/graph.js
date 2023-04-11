@@ -93,7 +93,7 @@ export async function resetLinkHighlights() {
 
 export async function shortestPath(graph) {
     const INF = Number.MAX_SAFE_INTEGER;
-    
+
     const nodes = graph.nodes.map(node => node.id);
     const distance = {};
     
@@ -123,8 +123,17 @@ export async function shortestPath(graph) {
       }
     }
     
-    return distance;
+    // Print the shortest distances as formatted strings
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = 0; j < nodes.length; j++) {
+      const fromNode = nodes[i];
+      const toNode = nodes[j];
+      const shortestDistance = distance[fromNode][toNode];
+      
+      console.log(`node ${fromNode} shortest distance to ${toNode} is ${shortestDistance}`);
+    }
   }
+}
   
 
 
