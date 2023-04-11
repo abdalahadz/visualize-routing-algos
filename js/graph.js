@@ -164,6 +164,7 @@ export async function drawGraph(nodes, links) {
             .attr("y", d => d.y);
         linkLabel.attr("x", d => (d.source.x + d.target.x) / 2)
             .attr("y", d => (d.source.y + d.target.y) / 2);
+
     }
     
     // update simulation every tick

@@ -5,6 +5,8 @@ console.log = function(...messages) {
   for (let i = 0; i < messages.length; i++) {
     logr.value += messages[i] + "\n";
   }
+  logr.focus();
+  logr.scrollTop = logr.scrollHeight;
 };
 
 window.runDijkstra = async function runDijkstra() {
@@ -48,7 +50,7 @@ async function LightFinal(text){
   // loop lights path in order, waiting 2 seconds between each step for visualisation purposes
   for (let i = 0; i < letters.length - 1; i++) {
     graphM.highlightLink(letters[i+1],letters[i],'green');
-    await graphM.sleep(2000);
+    await graphM.sleep(1000);
   }
 }
 
