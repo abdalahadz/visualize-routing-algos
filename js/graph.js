@@ -81,6 +81,38 @@ export async function resetLinkHighlights() {
     ;
 }
 
+
+export async function floydWarshall(nodes, links) {
+    // initialize distance matrix with maximum value
+    const dist = Array(nodes.length).fill().map(() => Array(nodes.length).fill(Infinity));
+    for (let i = 0; i < nodes.length; i++) {
+      dist[i][i] = 0;
+    }
+    
+    // populate distance matrix with link costs
+    for (const link of links) {
+      const sourceIdx = nodes.findIndex(node => node.id === link.source.id);
+      const targetIdx = nodes.findIndex(node => node.id === link.target.id);
+      dist[sourceIdx][targetIdx] = link.cost;
+      dist[targetIdx][sourceIdx] = link.cost; // assuming undirected graph
+    }
+  
+    // run Floyd-Warshall algorithm
+    for (let k = 0; k < nodes.length; k++) {
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = 0; j < nodes.length; j++) {
+          if (dist[i][k] + dist[k][j] < dist[i][j]) {
+            dist[i][j] = dist[i][k] + dist[k][j];
+          }
+        }
+      }
+    }
+  
+    return dist;
+  }
+
+
+
 //DRAW GRAPH
 
 export async function drawGraph(nodes, links) {
