@@ -13,10 +13,11 @@
         <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body>
+        <div class="main-canvas">
         <!--navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#">Visualize Routing Algorithms...Premium Pro Plus</a>
+                <a class="navbar-brand" href="#">NetViz+</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -26,34 +27,53 @@
             </div>
         </nav>
         <!-- Page content-->
-        <div class="flex">
+        <div class="flex canvas">
         <div class="container input-params">
             <div class="text-center mt-3">
                 
                 <div class="grid mode">
                     <div id="import"><h5>Upload Custom Network:</h5></div>
                     <div>
-                    <h5>Select Mode:</h5>
-                    <input type="button" value="Link-State" onclick="runDijkstra()">
-                    <input type="button" value="Distance-Vector" onclick="runDV()">
+                        <div class="flex-column">    
+                            <div class="container">
+                                <h6>New Node: [Node 1], [Node 2], [Link Value]</h6>
+                                <input class="tarea"id="New-Node-Name" type="text" name="username" maxlength="3" size="5"> ,
+                                <input class="tarea"id="New-Node-Link-Name" type="text" name="username" maxlength="3" size="5"> ,
+                                <input class="tarea"id="New-Node-Link-Value" type="text" name="username" maxlength="2" size="2">
+                                <input class="btn"id="New-Node-Button" type="submit" value="Add">
+                            </div>   
+                        </div>
                     </div>
                 </div>
-                
-                <div class="output-log mt-3">
-                    <h4 class="text-center">Trace</h4>
-                        <style>
-                            /* Define the grid layout */
-                            .grid {
-                            display: grid;
-                            grid-template-columns: 1fr 1fr;
-                            grid-gap: 10px;
-                            }
-                        </style>
-                        
-                        <div class="">
-                            <textarea id="logleft" rows="8" cols="100" readonly></textarea>
-                        </div>    
+                <div class="grid">
+
+                    <div class="container UI-Element mt-5">
+                        <div class="mode">
+                            <h5>Select Mode:</h5>
+                            <input type="button" class="btn" value="Link-State" onclick="runDijkstra()">
+                            <input type="button" class="btn" value="Distance-Vector" onclick="runDV()">
+                        </div>
+                    </div>
+    
+                    <div class="output-log mt-3">
+                        <h4 class="text-center">Trace</h4>
+                            <style>
+                                /* Define the grid layout */
+                                .grid {
+                                display: grid;
+                                grid-template-columns: 1fr 1fr;
+                                grid-gap: 10px;
+                                }
+                            </style>
+                            
+                            <div class="">
+                                <textarea class="tarea"id="logleft" rows="8" cols="100" readonly></textarea>
+                            </div> 
+    
+                    </div>
+
                 </div>
+                
 
                 
             </div>
@@ -63,28 +83,18 @@
 
         </div>
 
-        <div class="container UI-Element">
-            <div class="flex-column">    
-                <div class="container">
-                    <p>Add new Nodes/Links: [Node 1], [Node 2], [Link Value]</p>
-                    <input id="New-Node-Name" type="text" name="username" maxlength="3" size="5"> ,
-                    <input id="New-Node-Link-Name" type="text" name="username" maxlength="3" size="5"> ,
-                    <input id="New-Node-Link-Value" type="text" name="username" maxlength="2" size="2">
-                    <input id="New-Node-Button" type="submit" value="Create New node">
-                </div>   
-            </div>
-        </div>
+        
 
         
 
-        <div class="container">
-            <div class="text-center md-8">
-                <h4>Network</h4>
-            </div>
+        <div class="container network-disp-canvas">
+            <!-- <div class="text-center md-8">
+                <h2>Network Viewer</h2>
+            </div> -->
             <div class="text-center md-8 network-disp">
             </div>
         </div>
-        
+    </div>
         
     </body>
     <script src="https://d3js.org/d3.v5.min.js"></script>

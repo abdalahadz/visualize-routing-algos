@@ -40,6 +40,7 @@ async function importControls() {
   const importContainer = document.getElementById("import");
   const importButton = document.createElement("input");
   importButton.setAttribute("type","button");
+  importButton.setAttribute("class","btn");
   importButton.setAttribute("value","Import");
   importButton.setAttribute("onclick","upload()");
   importContainer.append(importButton);
