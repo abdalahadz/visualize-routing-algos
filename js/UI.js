@@ -19,6 +19,11 @@ async function AddNode(){
     const Node2 = document.getElementById("New-Node-Link-Name").value;
     const Value = document.getElementById("New-Node-Link-Value").value;
 
+    if(!Node1 || !Node2 || !Value) {
+        alert("please fill out all of the fields before adding a node")
+        return;
+    }
+
     var Nodes = await graph.getAllNodesAsList()
     var Links = await graph.getAllLinksAsList()
 
@@ -44,6 +49,8 @@ async function AddNode(){
 
     graph.drawGraph(Nodes, Links)
     document.getElementById("New-Node-Name").value = '';
+    document.getElementById("New-Node-Link-Name").value = '';
+    document.getElementById("New-Node-Link-Value").value.value = '';
 
 }
 //OutputLog("Link-State", "from A to C")
